@@ -34,8 +34,8 @@ from wagtail.admin.widgets import (
 )
 from wagtail.core.models import Comment, CommentReply, Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.tests.testapp.forms import ValidatedPageForm
-from wagtail.tests.testapp.models import (
+from wagtail.test.testapp.forms import ValidatedPageForm
+from wagtail.test.testapp.models import (
     DefaultStreamPage,
     EventPage,
     EventPageChooserModel,
@@ -46,7 +46,7 @@ from wagtail.tests.testapp.models import (
     SimplePage,
     ValidatedPage,
 )
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.test.utils import WagtailTestUtils
 
 
 class TestGetFormForModel(TestCase):
@@ -305,7 +305,7 @@ class TestPageEditHandlers(TestCase):
         handler_handler_repr = repr(edit_handler)
 
         self.assertIn(
-            "model=<class 'wagtail.tests.testapp.models.ValidatedPage'>",
+            "model=<class 'wagtail.test.testapp.models.ValidatedPage'>",
             handler_handler_repr,
         )
         self.assertIn("instance=None", handler_handler_repr)
@@ -646,7 +646,7 @@ class TestFieldPanel(TestCase):
         field_panel_repr = repr(field_panel)
 
         self.assertIn(
-            "model=<class 'wagtail.tests.testapp.models.EventPage'>", field_panel_repr
+            "model=<class 'wagtail.test.testapp.models.EventPage'>", field_panel_repr
         )
         self.assertIn("instance=None", field_panel_repr)
         self.assertIn("request=<WSGIRequest: GET '/'>", field_panel_repr)
