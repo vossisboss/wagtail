@@ -32,8 +32,8 @@ from wagtail.admin.widgets import (
     AdminDateInput,
     AdminPageChooser,
 )
-from wagtail.core.models import Comment, CommentReply, Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Comment, CommentReply, Page, Site
 from wagtail.test.testapp.forms import ValidatedPageForm
 from wagtail.test.testapp.models import (
     DefaultStreamPage,

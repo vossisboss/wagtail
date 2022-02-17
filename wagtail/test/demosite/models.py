@@ -14,11 +14,11 @@ from wagtail.admin.edit_handlers import (
     PageChooserPanel,
 )
 from wagtail.api import APIField
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import Orderable, Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.fields import RichTextField
 from wagtail.images.api.fields import ImageRenditionField
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Orderable, Page
 from wagtail.search import index
 
 # ABSTRACT MODELS
