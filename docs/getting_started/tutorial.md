@@ -1,5 +1,9 @@
 # Your first Wagtail site
 
+[//]: <> (Meagen's notes will appear in these comments throughout the file.)
+
+[//]: <> (We should have an introduction section here spelling out what people will be doing in the tutorial and what they will get at the end)
+
 ```{note}
 This tutorial covers setting up a brand new Wagtail project.
 If you'd like to add Wagtail to an existing Django project instead, see [](integrating_into_django).
@@ -24,11 +28,12 @@ If this does not return a version number or returns a version lower than 3.7, yo
    The way to do this varies by platform—see Pillow's
    [platform-specific installation instructions](https://pillow.readthedocs.org/en/latest/installation.html#external-libraries).
 ```
+[//]: <> (I assume thise was in important because people keep missing it but I could be wrong.)
+
 
 ### Create and activate a virtual environment
 
-We recommend using a virtual environment, which isolates installed dependencies from other projects.
-This tutorial uses [`venv`](https://docs.python.org/3/tutorial/venv.html), which is packaged with Python 3.
+We recommend using a virtual environment, which isolates installed dependencies from other projects. This tutorial uses [`venv`](https://docs.python.org/3/tutorial/venv.html), which is packaged with Python 3.
 
 **On Windows** (cmd.exe):
 
@@ -76,6 +81,9 @@ $ wagtail start mysite mysite
 ```{note}
 Generally, in Wagtail, each page type, or content type, is represented by a single app. However, different apps can be aware of each other and access each other's data. All of the apps need to be registered within the `INSTALLED_APPS` section of the `settings` file. Look at this file to see how the `start` command has listed them in there.
 ```
+[//]: <> (This note is a bit unclear. It could be clearer. Or could be presented as a recommended file structure section.)
+
+[//]: <> (Do we want to demonstrate how to do a core or base structure in an app through this tutorial? It is one of the most common configurations, so it would make sense to show people that.)
 
 ### Install project dependencies
 
@@ -123,6 +131,8 @@ You can now access the administrative area at <http://127.0.0.1:8000/admin>
 
 ## Extend the HomePage model
 
+[//]: <> (Let's focus less on the models/code and more on the components we want to include here. Let's make this section about the home page.)
+
 Out of the box, the "home" app defines a blank `HomePage` model in `models.py`, along with a migration that creates a homepage and configures Wagtail to use it.
 
 Edit `home/models.py` as follows, to add a `body` field to the model:
@@ -155,6 +165,8 @@ the model definition.
 
 You can now edit the homepage within the Wagtail admin area (go to Pages, Homepage, then Edit) to see the new body field. Enter some text into the body field, and publish
 the page by selecting _Publish_ at the bottom of the page editor, rather than _Save Draft_.
+
+[//]: <> (This should probably be broken up into two sections so people understand how the templates connect.)
 
 The page template now needs to be updated to reflect the changes made
 to the model. Wagtail uses normal Django templates to render each page
@@ -197,6 +209,7 @@ of a `RichTextField`:
 {% load wagtailcore_tags %}
 {{ page.body|richtext }}
 ```
+[//]: <> (Let's tell people what to actually type in versus assuming they know where to put that information.)
 
 Produces:
 
@@ -208,7 +221,11 @@ Produces:
 template that uses Wagtail's tags. Django will throw a `TemplateSyntaxError`
 if the tags aren't loaded.
 
+[//]: <> (Let's put a section here on structure that is a bit clearer about how structure is organized than that current note at the top.)
+
 ## A basic blog
+
+[//]: <> (Let's make the blog the whole tutorial instead of a section of the tutorial.)
 
 We are now ready to create a blog. To do so, run
 `python manage.py startapp blog` to create a new app in your Wagtail site.
@@ -259,10 +276,13 @@ with the following content:
 
 {% endblock %}
 ```
+[//]: <> (We need some more code sandwiches here rather than assuming people know what they're doing.)
 
 Most of this should be familiar, but we'll explain `get_children` a bit later.
 Note the `pageurl` tag, which is similar to Django's `url` tag but
 takes a Wagtail Page object as an argument.
+
+[//]: <> (We should be using screenshots even though they are a pain in the butt to maintain.)
 
 In the Wagtail admin, create a `BlogIndexPage` as a child of the Homepage,
 make sure it has the slug "blog" on the Promote tab, and publish it.
@@ -302,6 +322,8 @@ class BlogPage(Page):
 
 In the model above, we import `index` as this makes the model searchable. You can then list fields that you want to be searchable for the user.
 
+[//]: <> (The information about search here should probably be broken out in a note.)
+
 Run `python manage.py makemigrations` and `python manage.py migrate`.
 
 Create a template at `blog/templates/blog/blog_page.html`:
@@ -329,6 +351,10 @@ Create a template at `blog/templates/blog/blog_page.html`:
 Note the use of Wagtail's built-in `get_parent()` method to obtain the
 URL of the blog this post is a part of.
 
+[//]: <> (We might want to explain get_parent and get_children a bit more in-depth.)
+
+[//]: <> (We should teach people the trick for automatically generating child pages from specific parent pages here as an optional trick.)
+
 Now create a few blog posts as children of `BlogIndexPage`.
 Be sure to select type "Blog Page" when creating your posts.
 
@@ -353,6 +379,8 @@ Titles should link to post pages, and a link back to the blog's
 homepage should appear in the footer of each post page.
 
 ### Parents and Children
+
+[//]: <> (We should probably include this information a bit earlier. Or add the additional tricks here.)
 
 Much of the work you'll be doing in Wagtail revolves around the concept of hierarchical
 "tree" structures consisting of nodes and leaves (see [Theory](../reference/pages/theory)).
@@ -415,6 +443,8 @@ For more information, see: [Page QuerySet reference](../reference/pages/queryset
 
 ### Overriding Context
 
+[//]: <> (Let's provided a bit more background and/or information about the context method here.)
+
 There are a couple of problems with our blog index view:
 
 1.  Blogs generally display content in _reverse_ chronological order
@@ -448,6 +478,8 @@ Change:
 Now try unpublishing one of your posts - it should disappear from the blog index
 page. The remaining posts should now be sorted with the most recently published
 posts first.
+
+[//]: <> (Okay. So here is probably the spot where we want to include the information on custom models for people so that they don't get irritated with us later on. A custom image model should be added here at the very least before migrations are made related to images.)
 
 ### Images
 
@@ -505,6 +537,8 @@ class BlogPageGalleryImage(Orderable):
 Run `python manage.py makemigrations` and `python manage.py migrate`.
 
 There are a few new concepts here, so let's take them one at a time:
+
+[//]: <> (Let's weave the concepts into the code and do some code sandwiching.)
 
 Inheriting from `Orderable` adds a `sort_order` field to the model, to keep track of the ordering of images in the gallery.
 
@@ -850,8 +884,14 @@ Finally, we can update the `blog_page.html` template to display the categories:
 
 ![](../_static/images/tutorial/tutorial_10.jpg)
 
+[//]: <> (Some additional blog features we won't fully cover but should at least mention: comments, authentication, moving from post to post between posts.)
+
+[//]: <> (We should include a section on frontend options to head off people's questions about that.)
+
 ## Where next
 
 -   Read the Wagtail [topics](../topics/index) and [reference](../reference/index) documentation
 -   Learn how to implement [StreamField](../topics/streamfield) for freeform page content
 -   Browse through the [advanced topics](../advanced_topics/index) section and read [third-party tutorials](../advanced_topics/third_party_tutorials)
+
+[//]: <> (StreamField is a good place to send people to next. Third-party tutorials are good. We should include a section on deployment for people to click to so they can get a flavor for that. References on structuring projects or different project types or kits/templates could also be useful information.)
